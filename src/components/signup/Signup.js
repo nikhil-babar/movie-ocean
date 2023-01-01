@@ -95,12 +95,18 @@ const Signup = () => {
         });
     };
 
+    const onChange = (data)=>{
+        setFormData(prev => {
+            return {...prev, ...data}
+        })
+    }
+
     const { step, nextStep, prevStep, isFirstStep, isLastStep, takeToStep } =
         useMultiStepForm(
             [
-                <Step1 formData={formData} setFormData={setFormData} />,
-                <Step2 formData={formData} setFormData={setFormData} />,
-                <Step3 formData={formData} setFormData={setFormData} />,
+                <Step1 formData={formData} onChange = {onChange} />,
+                <Step2 formData={formData} onChange = {onChange} />,
+                <Step3 formData={formData} onChange = {onChange} />,
             ],
             fields,
             validate

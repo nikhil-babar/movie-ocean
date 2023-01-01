@@ -1,8 +1,41 @@
 import React from 'react'
+import { useRef } from 'react';
 import Slider from 'react-slick';
 import Card from './Card';
+import { useNavigate } from 'react-router-dom';
 
-const SlidingWindow = ({ movies, title }) => {
+function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, display: "block" }}
+            onClick={onClick}
+        />
+    );
+}
+
+function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, display: "block"}}
+            onClick={onClick}
+        />
+    );
+}
+
+const SlidingWindow = ({ movies, title, className }) => {
+
+    const navigate = useNavigate()
+
+    const onCardClick = (id) => {
+        navigate(`/home/movie/${id}`)
+    }
+
+    const slider = useRef(null)
+
     const settings = {
         dots: false,
         infinite: false,
@@ -10,6 +43,8 @@ const SlidingWindow = ({ movies, title }) => {
         slidesToShow: 5,
         slidesToScroll: 5,
         initialSlide: 0,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />,
         responsive: [
             {
                 breakpoint: 1400,
@@ -42,15 +77,16 @@ const SlidingWindow = ({ movies, title }) => {
         ]
     };
 
+
     return (
         <>
-            <section className='my-5'>
-                <div className="px-7 sm:px-7 md:px-10 lg:px-14">
-                    <p className='text-white text-lg sm:text-xl md:text-2xl lg:text-3xl md:mb-2 lg:mb-10'>{title}</p>
-                    <Slider {...settings} className="justify-center mt-5">
+            <section className={`my-5 ${className}`}>
+                <div className="px-3 sm:px-5 md:px-7 ">
+                    <p className='text-white text-lg md:text-xl lg:text-2xl ml-3 md:mb-2 lg:ml-10 md:ml-7 lg:mb-7'>{title}</p>
+                    <Slider {...settings} ref={slider} className="justify-center mt-5">
                         {
                             movies.map(value => {
-                                return (<Card key={value.title} value={value} />)
+                                return (<Card key={value.title} value={value} onCardClick={onCardClick} />)
                             })
                         }
                     </Slider>

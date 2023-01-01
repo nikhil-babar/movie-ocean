@@ -1,6 +1,6 @@
 import { useQuery } from "react-query"
 
-export const apiPath = 'http://localhost:5000'
+export const apiPath = 'http://192.168.43.41:5000'
 
 export const useFetch = ({queryKey, prepare, path, onSuccess, onError}) => {
     return useQuery(`${queryKey}`, async () => {

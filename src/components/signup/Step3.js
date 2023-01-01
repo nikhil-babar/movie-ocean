@@ -1,12 +1,6 @@
 import React from 'react'
 
-const Step3 = ({formData, setFormData}) => {
-
-    const onChange = (data)=>{
-        setFormData(prev => {
-            return {...prev, ...data}
-        })
-    }
+const Step3 = ({formData, onChange}) => {
 
     const { bio } = formData
 

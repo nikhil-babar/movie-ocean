@@ -7,7 +7,7 @@ a{
 }
 
 button{
-    @apply block h-10  mx-auto text-lg w-full rounded-lg
+    @apply block h-10 mx-auto text-lg rounded-lg px-3
 }
 
 option{
@@ -19,7 +19,7 @@ input, select{
 }
 
 .section-main{
-    @apply h-72 flex flex-col justify-end bg-blend-darken
+    @apply h-80 flex flex-col bg-blend-darken
 }
 
 .img-backdrop{
@@ -27,7 +27,7 @@ input, select{
 }
 
 .navbar-brand{
-    @apply text-lg text-red-700 my-3
+    @apply text-lg text-red-700 font-bold
 }
 
 .navbar-icon{
@@ -35,16 +35,32 @@ input, select{
 }
 
 .card{
-    @apply w-36 h-72 border-white shadow-sm mx-auto
+    @apply w-36 h-72 shadow-sm mx-auto
+}
+
+.card:hover{
+    @apply  border-b-2 border-white
 }
 
 .card-img{
-    @apply w-full h-48
+    @apply w-full h-[215px]
+}
+
+.sidebar{
+    animation: sidebar 0.10s ease-in 0s 1;
+    @apply bg-[#0A2647]
+}
+
+@keyframes sidebar {
+    from {
+        margin-left: -200px;
+    }
+    to{
+        margin-left: 0px;
+    }
 }
 
 @screen sm{
-
-
     .section-main{
         @apply h-96
     }
@@ -68,7 +84,7 @@ input, select{
 
 @screen md{
     .section-main{
-        height: 450px;
+        @apply h-[550px]
     }
 
     .navbar-brand{
@@ -90,11 +106,11 @@ input, select{
 
 @screen lg{
     .section-main{
-        height: 700px;
+        @apply h-[700px]
     }
 
     .navbar-brand{
-        @apply text-2xl p-4
+        @apply text-2xl p-3
     }
 
     .navbar-icon{

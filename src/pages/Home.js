@@ -1,19 +1,13 @@
 import '../App.css'
-import MainSection from '../components/MainSection'
-import Navbar from '../components/Navbar'
 import SlidingWindow from '../components/SlidingWindow'
-import { useEffect } from 'react'
 import { useFetch } from '../customHooks/useFetch'
-import { useLocation } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
+import Background from '../components/Background'
 
 const IMG_URL = 'http://image.tmdb.org/t/p/original'
 
 function Home() {
-    const location = useLocation()
-
-    useEffect(() => {
-        console.log(location)
-    })
+    const navigate = useNavigate()
 
     const onSuccess = () => {
         console.log('Data fetched sucessfully')
@@ -43,8 +37,15 @@ function Home() {
 
         return (
             <>
-                <Navbar />
-                <MainSection movie={randomMovie} img={movieBackdrop} />
+                <section className='section-main'>
+                    <Background img={movieBackdrop} className = {'justify-end'}>
+                        <div className="bottom-2 left-0 p-3 z-10 sm:p-5 md:p-7 lg:p-12 mb-5">
+                            <p className='text-xl text-white sm:text-3xl md:text-5xl lg:my-4'>{randomMovie.title}</p>
+                            <p className="text-sm text-yellow-500 sm:text-lg">Rating: {randomMovie.vote_average}</p>
+                            <p className="text-xs text-white mt-3 text-ellipsis sm:max-h-fit max-h-14 sm:overflow-auto overflow-scroll sm:text-sm md:text-lg description">{randomMovie.overview}</p>
+                        </div>
+                    </Background>
+                </section>
                 {
                     data.map((section) => {
                         return <SlidingWindow movies={section.data} title={section.title} key={section.title} />
