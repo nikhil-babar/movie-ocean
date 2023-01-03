@@ -1,19 +1,16 @@
 import { useQuery } from "react-query"
-
-export const apiPath = 'http://192.168.43.41:5000'
+import usePrivateAxios from "./usePrivateAxios"
 
 export const useFetch = ({queryKey, prepare, path, onSuccess, onError}) => {
+    const axiosPrivateClient = usePrivateAxios()
+
     return useQuery(`${queryKey}`, async () => {
         try {
-            let response = await fetch(`${apiPath}${path}`)
+            let response = await axiosPrivateClient(`${path}`)
 
-            if (response.status !== 200) {
-                throw new Error({ message: 'server side error' })
-            }
-
-            return await response.json()
+            return response.data
         } catch (error) {
-            console.log('useFetch error: ', error.message)
+            console.log('useFetch error: ', error)
             throw new Error('useFetch hook error')
         }
     }, {

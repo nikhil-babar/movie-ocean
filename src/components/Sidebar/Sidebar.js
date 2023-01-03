@@ -5,7 +5,7 @@ import SidebarData from './SidebarData'
 const Sidebar = ({ state, toggler }) => {
   return (
     <>
-      <div className={`h-screen fixed top-0 left-0 w-48 z-20 p-3 rounded-r-xl ${(state ? 'sidebar' : 'hidden')}`}>
+      <div className={`h-full fixed top-0 left-0 w-48 z-20 p-3 rounded-r-xl ${(state ? 'sidebar' : 'hidden')}`}>
 
         <button className='text-2xl text-white absolute right-0 mt-0' onClick={()=>toggler(prev => !prev)}><i className="fa-solid fa-xmark"></i></button>
         <div className="mx-auto mb-5 border-white rounded-full border-2 py-2 w-16 hover:bg-gray-400 mt-10">

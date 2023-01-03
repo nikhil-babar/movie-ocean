@@ -4,9 +4,9 @@ import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
 import { useState } from "react";
-import { usePost } from "../../customHooks/usePost";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import {axiosClient} from "../../api/axiosClient";
+import useAuth from "../../customHooks/useAuth";
 
 const initialFormData = {
     name: "",
@@ -21,36 +21,25 @@ const Signup = () => {
     const [formData, setFormData] = useState(initialFormData);
     const fields = [["name", "age", "gender"], ["userName", "password"], ["bio"]];
     const navigate = useNavigate()
-
-    useEffect(() => {
-        console.log('render')
-    })
-
-    const { mutateAsync } = usePost({
-        path: '/user',
-        type: 'POST',
-        onSuccess: (data) => {
-            navigate('/home', {
-                state: data
-            })
-        },
-        onError: (error) => {
-            console.log(error)
-        }
-    })
+    const { auth, setAuth } = useAuth()
 
     const submitForm = () => {
-        mutateAsync(formData).catch((err) => {
-            switch (Number(err.message)) {
-                case 409:
-                    takeToStep(2)
-                    alert('Username already taken')
-                    break;
-            
-                default:
-                    break;
-            }
-        })
+        axiosClient.post('/user/createAccount', formData)
+            .then((response) => {
+                setAuth({...response.data})
+
+                navigate('/home')
+            }).catch((err) => {
+                switch (err.response?.status) {
+                    case 409:
+                        takeToStep(2)
+                        alert('Username already taken')
+                        break;
+
+                    default:
+                        break;
+                }
+            })
     }
 
     const validate = (currentStep) => {
@@ -95,18 +84,18 @@ const Signup = () => {
         });
     };
 
-    const onChange = (data)=>{
+    const onChange = (data) => {
         setFormData(prev => {
-            return {...prev, ...data}
+            return { ...prev, ...data }
         })
     }
 
     const { step, nextStep, prevStep, isFirstStep, isLastStep, takeToStep } =
         useMultiStepForm(
             [
-                <Step1 formData={formData} onChange = {onChange} />,
-                <Step2 formData={formData} onChange = {onChange} />,
-                <Step3 formData={formData} onChange = {onChange} />,
+                <Step1 formData={formData} onChange={onChange} />,
+                <Step2 formData={formData} onChange={onChange} />,
+                <Step3 formData={formData} onChange={onChange} />,
             ],
             fields,
             validate

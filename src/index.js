@@ -8,18 +8,21 @@ import "slick-carousel/slick/slick-theme.css";
 import { QueryClient, QueryClientProvider, } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { BrowserRouter } from 'react-router-dom';
+import AuthContext from './context/AuthContext';
 
 const queryClient = new QueryClient()
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <App />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </BrowserRouter>
+    <AuthContext>
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <App />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </BrowserRouter>
+    </AuthContext>
   </React.StrictMode>
 );
 
