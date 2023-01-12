@@ -23,16 +23,12 @@ const Navbar = () => {
             <Link to="/home" className='text-white'>Home</Link>
           </li>
           <li className="p-1 mx-2 hidden sm:block">
-            <Link to="/" className='text-white'>Movies</Link>
+            <Link to="/home/movies" className='text-white'>Movies</Link>
           </li>
           <li className="p-1 mx-2 hidden sm:block">
             <Link to="/" className='text-white'>Watchlist</Link>
           </li>
         </ul>
-
-        <div className="mr-5 my-2 border-white rounded-full border-2 px-3 py-1 hover:bg-gray-400 hidden sm:block">
-          <span className='text-lg text-white'>N</span>
-        </div>
 
         <div className="mr-5 my-2 pb-1 hover:bg-gray-400 block sm:hidden">
           <button className='text-lg text-white' onClick={() => toggler(prev => !prev)}><i className="fa-sharp fa-solid fa-bars"></i></button>

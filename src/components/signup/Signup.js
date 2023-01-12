@@ -21,7 +21,7 @@ const Signup = () => {
     const [formData, setFormData] = useState(initialFormData);
     const fields = [["name", "age", "gender"], ["userName", "password"], ["bio"]];
     const navigate = useNavigate()
-    const { auth, setAuth } = useAuth()
+    const { setAuth } = useAuth()
 
     const submitForm = () => {
         axiosClient.post('/user/createAccount', formData)

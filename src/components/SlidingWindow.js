@@ -1,97 +1,143 @@
 import React from 'react'
 import { useRef } from 'react';
 import Slider from 'react-slick';
-import Card from './movieCard';
-import { useNavigate } from 'react-router-dom';
+import MovieCard from './cards/MovieCard';
+import PersonCard from './cards/PersonCard'
 
-function SampleNextArrow(props) {
+
+function Arrow(props) {
     const { className, style, onClick } = props;
     return (
         <div
             className={className}
-            style={{ ...style, display: "block" }}
+            style={{ ...style, display: "none" }}
             onClick={onClick}
         />
     );
 }
 
-function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: "block"}}
-            onClick={onClick}
-        />
-    );
-}
-
-const SlidingWindow = ({ movies, title, className }) => {
-
-    const navigate = useNavigate()
-
-    const onCardClick = (id) => {
-        navigate(`/home/movie/${id}`)
-    }
+const SlidingWindow = ({ value, title, className, type, clickFunc }) => {
 
     const slider = useRef(null)
 
-    const settings = {
-        dots: false,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 5,
-        slidesToScroll: 5,
-        initialSlide: 0,
-        nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />,
-        responsive: [
-            {
-                breakpoint: 1400,
-                settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 4
-                }
-            },
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3
-                }
-            },
-            {
-                breakpoint: 650,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2
-                }
-            }
-        ]
-    };
+    const settings = () => {
+        switch (type) {
+            case 1:
+                return {
+                    dots: false,
+                    infinite: false,
+                    speed: 500,
+                    slidesToShow: 5,
+                    slidesToScroll: 5,
+                    initialSlide: 0,
+                    nextArrow: <Arrow />,
+                    prevArrow: <Arrow />,
+                    responsive: [
+                        {
+                            breakpoint: 1400,
+                            settings: {
+                                slidesToShow: 4,
+                                slidesToScroll: 4
+                            }
+                        },
+                        {
+                            breakpoint: 1024,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 3
+                            }
+                        },
+                        {
+                            breakpoint: 650,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 3,
+                            }
+                        },
+                        {
+                            breakpoint: 480,
+                            settings: {
+                                slidesToShow: 2,
+                                slidesToScroll: 2
+                            }
+                        }
+                    ]
+                };
+
+            case 2:
+                return {
+                    dots: false,
+                    infinite: false,
+                    speed: 500,
+                    slidesToShow: 5,
+                    slidesToScroll: 5,
+                    initialSlide: 0,
+                    nextArrow: <Arrow />,
+                    prevArrow: <Arrow />,
+                    responsive: [
+                        {
+                            breakpoint: 1400,
+                            settings: {
+                                slidesToShow: 4,
+                                slidesToScroll: 4
+                            }
+                        },
+                        {
+                            breakpoint: 1024,
+                            settings: {
+                                slidesToShow: 4,
+                                slidesToScroll: 4
+                            }
+                        },
+                        {
+                            breakpoint: 800,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 3
+                            }
+                        },
+                        {
+                            breakpoint: 650,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 3,
+                            }
+                        },
+                        {
+                            breakpoint: 480,
+                            settings: {
+                                slidesToShow: 2,
+                                slidesToScroll: 2
+                            }
+                        }
+                    ]
+                };
+
+            default:
+                return {}
+        }
+    }
 
 
     return (
         <>
-            <section className={`my-5 ${className}`}>
-                <div className="px-3 sm:px-5 md:px-7 ">
-                    <p className='text-white text-lg md:text-xl lg:text-2xl ml-3 md:mb-2 lg:ml-10 md:ml-7 lg:mb-7'>{title}</p>
-                    <Slider {...settings} ref={slider} className="justify-center mt-5">
-                        {
-                            movies.map(value => {
-                                return (<Card key={value.title} value={value} onCardClick={onCardClick} />)
-                            })
-                        }
-                    </Slider>
+            <div className={`${className}`}>
+                <div className="flex justify-between items-center  lg:pr-[3%] md:pr-[7%] sm:pr-[5%] xs:pr-5 pr-[8%]">
+                    <p className = {`text-white text-lg md:text-xl sm:w-1/3 lg:pl-[3%] md:pl-[7%] sm:pl-[5%] xs:pl-5 pl-[8%] my-3 ${(type === 2) ? 'md:ml-5' : ''}`}>{title}</p>
+                    <div className='visible'>
+                        <i className="fa-solid fa-arrow-left-long text-gray-600 md:text-2xl text-xl hover:text-white mr-2" onClick={() => slider?.current?.slickPrev()}></i>
+                        <i className="fa-solid fa-arrow-right-long text-gray-600 md:text-2xl text-xl hover:text-white ml-2" onClick={() => slider?.current?.slickNext()}></i>
+                    </div>
                 </div>
-            </section>
+                <Slider {...settings()} ref={slider} className="justify-center lg:mt-10 md:mt-7 sm:mt-5 mt-3 h-80">
+                    {
+                        {
+                            1: value.map(movie => <MovieCard key={movie.id} value={movie} onCardClick={clickFunc} />),
+                            2: value.map(person => <PersonCard key={person.id} value={person} />)
+                        }[type]
+                    }
+                </Slider>
+            </div>
         </>
     )
 }

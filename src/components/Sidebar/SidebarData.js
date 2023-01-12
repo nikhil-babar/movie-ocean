@@ -7,7 +7,7 @@ const SidebarData = [
     },
     {
         title: 'Movies',
-        path: '/home',
+        path: '/home/movies',
         icon: 'fa-solid fa-film'
     },
     {

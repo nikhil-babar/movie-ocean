@@ -14,7 +14,7 @@ const Login = () => {
         e.preventDefault()
         axiosClient.post('/user/login', { userName, password })
             .then((response) => {
-                setAuth({ ...response.data, Login: response.status })
+                setAuth({ ...response.data})
 
                 navigate('/home')
             }).catch((err) => {

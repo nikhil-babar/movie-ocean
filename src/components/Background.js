@@ -1,4 +1,3 @@
-import React from 'react'
 
 const Background = ({ img, children, className }) => {
     return (
@@ -9,8 +8,8 @@ const Background = ({ img, children, className }) => {
                 backgroundColor: 'rgba(0,0,0,0.7)',
                 backgroundSize: 'cover',
                 backgroundBlendMode: 'darken',
-                boxShadow: '0px -20px 50px inset',
-                backgroundPositionX: 'center'
+                boxShadow: '0px -50px 100px #0F1016 inset',
+                backgroundPositionX: 'center',
             }}>
                 {children}
             </div>

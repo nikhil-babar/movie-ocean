@@ -1,5 +1,6 @@
+
 body{
-    @apply bg-black overflow-x-hidden
+    @apply bg-[#0F1016] overflow-x-hidden
 }
 
 a{
@@ -17,6 +18,19 @@ option{
 input, select{
    @apply block my-3 h-10 p-1 mx-auto w-full bg-transparent border-b-white border-b-2 px-2 text-white
 }
+
+::-webkit-scrollbar{
+    @apply w-1 rounded-lg
+}
+
+::-webkit-scrollbar-track{
+    @apply bg-[#061629]
+}
+
+::-webkit-scrollbar-thumb{
+    @apply bg-[#0b2c53]
+}
+
 
 .section-main{
     @apply h-80 flex flex-col bg-blend-darken
@@ -43,12 +57,43 @@ input, select{
 }
 
 .card-img{
-    @apply w-full h-[215px]
+    @apply w-full h-[215px] rounded-lg
 }
 
 .sidebar{
-    animation: sidebar 0.10s ease-in 0s 1;
     @apply bg-[#0A2647]
+}
+
+.grid-movie{
+    @apply grid grid-cols-2 gap-x-5 gap-y-10
+}
+
+.dropdown-menu-none{
+    @apply opacity-0 transition-all duration-150 translate-y-[-10px] ease-out pointer-events-none
+}
+
+.dropdown-menu-active{
+    @apply opacity-100 translate-y-0 transition-all duration-150 ease-in
+}
+
+.arrow-down{
+    @apply transition-transform rotate-0 duration-150
+}
+
+.arrow-up{
+    @apply transition-transform rotate-180 duration-150
+}
+
+.review{
+    @apply text-white grid grid-cols-[min-content_1fr] grid-rows-[min-content_min-content] lg:p-5 my-5 mx-auto w-[90%] max-w-screen-xl
+}
+
+.review-icon{
+    @apply text-2xl mx-3 bg-gray-500 rounded-full p-1 px-2
+}
+
+.review-content{
+    @apply bg-[#191B23] rounded-sm p-5 col-span-2 my-2 w-[95%] mx-auto
 }
 
 @keyframes sidebar {
@@ -73,12 +118,24 @@ input, select{
         @apply hidden
     }
 
+    .grid-movie{
+        @apply grid grid-cols-3 gap-x-5 gap-y-10
+    }
+
     .card{
         @apply h-80 w-40
     }
 
     .card-img{
-        @apply h-56
+        @apply h-60
+    }
+
+    .review-content{
+        @apply col-start-2 w-full
+    }
+
+    .review-icon{
+        @apply text-3xl mx-3 row-span-2
     }
 }
 
@@ -100,7 +157,11 @@ input, select{
     }
 
     .card-img{
-        @apply h-64
+        @apply h-72
+    }
+
+    .grid-movie{
+        @apply grid grid-cols-3 gap-x-14 gap-y-10
     }
 }
 
@@ -128,4 +189,23 @@ input, select{
     .description{
         @apply overflow-auto
     }
+
+    .grid-movie{
+        @apply grid grid-cols-4 gap-x-12 gap-y-10
+    }
 }
+
+@screen xl{
+    .grid-movie{
+        @apply grid grid-cols-5 gap-x-12 gap-y-10
+    }
+}
+
+@screen 1.5xl{
+    .grid-movie{
+        @apply grid grid-cols-6 gap-x-12 gap-y-10 
+    }
+}
+
+
+

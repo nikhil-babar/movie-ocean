@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import useAuth from './useAuth'
 import { axiosPrivateClient, axiosClient } from '../api/axiosClient'
 
@@ -22,9 +22,8 @@ const usePrivateAxios = () => {
 
             async error => {
                 try {
-                    if(error.response?.status === 401 && error.config?.retry !== true){
+                    if(error.response?.status === 401){
                         const request = error.config
-                        request.retry = true
 
                         const newAccessToken = await axiosClient('/user/getAccessToken')
 
@@ -47,7 +46,7 @@ const usePrivateAxios = () => {
             axiosPrivateClient.interceptors.request.eject(requestInterceptor)
             axiosPrivateClient.interceptors.response.eject(responseInterceptor)
         }
-    }, [auth])
+    }, [auth, setAuth])
 
     return axiosPrivateClient
 }
