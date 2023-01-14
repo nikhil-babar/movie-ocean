@@ -21,9 +21,9 @@ module.exports = {
       '2xl': '1536px',
     },
     extend: {
-      font:{
-        brand: ['Roboto Mono', 'monospace'],
-      },
+      transitionProperty:{
+        width:'width'
+      }
     },
   },
   plugins: [],

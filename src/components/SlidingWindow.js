@@ -123,8 +123,8 @@ const SlidingWindow = ({ value, title, className, type, clickFunc }) => {
         <>
             <div className={`${className}`}>
                 <div className="flex justify-between items-center  lg:pr-[3%] md:pr-[7%] sm:pr-[5%] xs:pr-5 pr-[8%]">
-                    <p className = {`text-white text-lg md:text-xl sm:w-1/3 lg:pl-[3%] md:pl-[7%] sm:pl-[5%] xs:pl-5 pl-[8%] my-3 ${(type === 2) ? 'md:ml-5' : ''}`}>{title}</p>
-                    <div className='visible'>
+                    <p className = {`text-white text-lg md:text-xl w-full sm:w-1/3 lg:pl-[3%] md:pl-[7%] sm:pl-[5%] xs:pl-5 pl-[8%] my-3 ${(type === 2) ? 'md:ml-5' : ''}`}>{title}</p>
+                    <div className='sm:block hidden'>
                         <i className="fa-solid fa-arrow-left-long text-gray-600 md:text-2xl text-xl hover:text-white mr-2" onClick={() => slider?.current?.slickPrev()}></i>
                         <i className="fa-solid fa-arrow-right-long text-gray-600 md:text-2xl text-xl hover:text-white ml-2" onClick={() => slider?.current?.slickNext()}></i>
                     </div>

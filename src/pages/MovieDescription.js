@@ -1,10 +1,11 @@
 import React from "react";
 import Time from "../components/Time";
 import { useNavigate, useParams } from "react-router-dom";
-import { useFetch } from "../customHooks/useFetch";
 import Background from "../components/Background";
 import SlidingWindow from "../components/SlidingWindow";
 import useWindow from "../customHooks/useWindow";
+import { useQuery } from "react-query";
+import { getMovieById } from "../api/movies";
 
 const IMG_URL = "http://image.tmdb.org/t/p/original";
 
@@ -17,16 +18,7 @@ const MovieDescription = () => {
         isLoading,
         isSuccess,
         data: movie,
-    } = useFetch({
-        queryKey: ['movie', id],
-        path: `/movies/${id}`,
-        onSuccess: () => {
-            console.log(`successfully fetched movie: ${id}`);
-        },
-        onError: () => {
-            console.log("error in fetching");
-        },
-    })
+    } = useQuery(['movies', parseInt(id)], () => getMovieById(id))
 
     if (isLoading) {
         return <h1 className="text-white">loading..</h1>;

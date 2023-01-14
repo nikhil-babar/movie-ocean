@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { Link, useOutlet } from 'react-router-dom'
-import Sidebar from './Sidebar/Sidebar'
+import SearchBar from './SearchBar'
 
 const Navbar = () => {
 
@@ -13,6 +13,9 @@ const Navbar = () => {
       <div className="flex justify-between items-center h-fit pl-2 absolute top-0 left-0 w-full">
 
         <ul className="flex justify-start items-center list-none flex-nowrap">
+          <div className="my-2 pb-1 hover:bg-gray-400 block sm:hidden">
+            <button className='text-lg text-white' onClick={() => toggler(prev => !prev)}><i className="fa-sharp fa-solid fa-bars"></i></button>
+          </div>
           <li className="p-1 mx-2 pb-2">
             <h2 className="navbar-brand z-20 my-2">
               MOVIE-REVIEW
@@ -30,12 +33,9 @@ const Navbar = () => {
           </li>
         </ul>
 
-        <div className="mr-5 my-2 pb-1 hover:bg-gray-400 block sm:hidden">
-          <button className='text-lg text-white' onClick={() => toggler(prev => !prev)}><i className="fa-sharp fa-solid fa-bars"></i></button>
-        </div>
+        <SearchBar className={'absolute right-0 my-[10px] sm:my-4 top-0 mx-3'} />
       </div>
 
-      <Sidebar state={state} toggler={toggler} />
 
       {outlet}
 

@@ -1,25 +1,18 @@
 import React from 'react'
 import { useState } from 'react'
-import { useFetch } from '../customHooks/useFetch'
 import { useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useQuery, useQueryClient } from 'react-query'
+import { getMoviesByQuery } from '../api/movies'
 
-const SearchBar = () => {
+const SearchBar = ({ className }) => {
   const [tempTerm, setTempTerm] = useState('')
   const [term, setTerm] = useState(false)
   const flag = useRef(false)
+  const navigate = useNavigate()
+  const client = useQueryClient()
 
-  const { data: searchResults, isSuccess } = useFetch({
-    path: '/movies/search',
-    queryKey: ['search', term],
-    searchParams: {
-      term
-    },
-    onSuccess: (searchResults) => {
-      console.log(searchResults)
-    },
-    onError: (err) => {
-      console.log(err.message)
-    },
+  const { data: searchResults, isSuccess } = useQuery(['movies', 'search', term], () => getMoviesByQuery(term), {
     enabled: flag.current,
     placeholderData: {
       results: [
@@ -27,6 +20,10 @@ const SearchBar = () => {
       ]
     }
   })
+
+  useEffect(() => {
+    client.setQueryData(['movies', 'search', ''], { results: [{title: 'No result'}]})
+  }, [])
 
   useEffect(() => {
     return () => {
@@ -52,17 +49,18 @@ const SearchBar = () => {
 
   return (
     <>
-      <div className="flex justify-center items center text-white ">
-        <div className="w-3/4 h-screen p-5">
-          <input type="text" name="term" id="term" placeholder='Search' onChange={onChange} className = "border-2 rounded-lg" />
-          <div className="mt-5 p-5 border-white border-2 max-h-96 text-white overflow-y-scroll">
-            {
-              (isSuccess) ? searchResults.results.map((movie) => {
-                    return <p className="p-3 text-white">{movie.title}</p>
-                  })
-                  : <p className="p-3 text-white">No results</p>
-            }
-          </div>
+      <div className={`w-80 h-80 ${className}`}>
+        <div className="search-bar float-right absolute top-0 glass">
+          <input type="text" name="term" id="term" placeholder='Search' onChange={onChange} className="search-bar-input" />
+          <button className='search-bar-button mx-auto'><i className="fa-solid fa-magnifying-glass text-white"></i></button>
+        </div>
+        <div className="search-bar-content glass">
+          {
+            (isSuccess) ? searchResults.results.map((movie) => {
+              return <p className="p-3 text-gray-300 hover:text-white" onMouseDown={() => navigate(`/home/movies/${movie.id}`)}>{movie.title}</p>
+            })
+              : <p className="p-3">No results</p>
+          }
         </div>
       </div>
     </>

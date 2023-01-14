@@ -1,8 +1,10 @@
+
 import React from 'react'
 import { useState } from 'react'
-import useInfiniteFetch from '../customHooks/useInfiniteFetch'
 import MovieGrid from '../components/MovieGrid'
 import Dropdown from '../components/Dropdown'
+import { useInfiniteQuery } from 'react-query'
+import { getMoviesByGenre } from '../api/movies'
 
 const GENRE_DROPDOWN = [
     {
@@ -86,14 +88,11 @@ const GENRE_DROPDOWN = [
 const Movies = () => {
     const [genre, setGenre] = useState(28)
 
-    const { isSuccess, data: movies, fetchNextPage } = useInfiniteFetch({
-        queryKey: genre,
-        path: '/movies/genre',
-        searchParams: {
-            genre
-        },
-        onSuccess: (data) => {
-            console.log(data)
+    const { isSuccess, data: movies, fetchNextPage } = useInfiniteQuery(['movies', genre], ({ pageParam = 1 }) => getMoviesByGenre(genre, pageParam), {
+
+        keepPreviousData: true,
+        getNextPageParam: (lastPage) => {
+            return lastPage.page + 1
         }
     })
 
