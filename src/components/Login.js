@@ -47,8 +47,8 @@ const Login = () => {
             <div className='text-white text-center w-2/3 mx-auto h-fit mt-36 max-w-sm px-3 sm:px-5'>
                 <p className='text-3xl my-8'>Login</p>
                 <form  onSubmit = {onSubmit}>
-                    <input type="text" placeholder='Username' id='userName' onChange={onChange} />
-                    <input type="password" placeholder='Password' id='password' onChange={onChange} />
+                    <input type="text" placeholder='Username' id='userName' onChange={onChange} className = "outline-none" required/>
+                    <input type="password" placeholder='Password' id='password' onChange={onChange} className = "outline-none" required/>
                     <p className='text-end my-3 mb-8'><a href="/">Forgot Password?</a></p>
                     <button type='submit' className='bg-blue-500 font-bold' >LOGIN</button>
                     <p className='my-2'>Don't have an account? <a href='/'>sign in</a></p>

@@ -6,27 +6,30 @@ export async function getMovies() {
 }
 
 export async function getMovieById(id) {
-    if(isNaN(id)) throw new Error('Invalid movieId')
+    if (isNaN(id)) throw new Error('Invalid movieId')
 
     const response = await axios.get(`/movies/${id}`)
     return response.data
 }
 
 export async function getMoviesByQuery(query) {
-    if(query.match(/[^a-zA-Z ]/)) throw new Error('Invalid query')
+    const response = await axios.get('/movies/search', {
+        params: {
+            term: query
+        }
+    })
 
-    const url = new URL('http://localhost:5000/movies/search')
-    url.searchParams.append('term', query)
-
-    const response = await axios.get(url.href)
     return response.data
 }
 
 export async function getMoviesByGenre(genre, pageParam = 1) {
-    const url = new URL('http://localhost:5000/movies/genre')
-    url.searchParams.append('page', pageParam)
-    url.searchParams.append('genre', genre)
 
-    const response = await axios.get(url.pathname + url.search)
+    const response = await axios.get('/movies/genre', {
+        params: {
+            page: pageParam,
+            genre
+        }
+    })
+
     return response.data
 }

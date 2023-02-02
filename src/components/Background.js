@@ -2,7 +2,7 @@
 const Background = ({ img, children, className }) => {
     return (
         <>
-            <div className={`section-main w-full -z-10 ${className}`} style={{
+            <div className={`section-main w-full -z-10 ${className} absolute top-0`} style={{
                 backgroundImage: `url('${img}')`,
                 backgroundRepeat: 'no-repeat',
                 backgroundColor: 'rgba(0,0,0,0.7)',

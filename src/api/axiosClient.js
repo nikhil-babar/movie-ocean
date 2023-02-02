@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiPath = 'http://localhost:5000'
+const apiPath = 'http://192.168.43.41:5000'
 
 export const axiosClient = axios.create({
     baseURL: apiPath,

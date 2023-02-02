@@ -28,9 +28,7 @@ const Navbar = () => {
           <li className="p-1 mx-2 hidden sm:block">
             <Link to="/home/movies" className='text-white'>Movies</Link>
           </li>
-          <li className="p-1 mx-2 hidden sm:block">
-            <Link to="/" className='text-white'>Watchlist</Link>
-          </li>
+
         </ul>
 
         <SearchBar className={'absolute right-0 my-[10px] sm:my-4 top-0 mx-3'} />

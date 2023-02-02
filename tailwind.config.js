@@ -23,6 +23,9 @@ module.exports = {
     extend: {
       transitionProperty:{
         width:'width'
+      },
+      colors: {
+        templateBlue: '#061629'
       }
     },
   },

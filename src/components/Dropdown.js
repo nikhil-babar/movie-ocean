@@ -8,7 +8,7 @@ const Dropdown = ({ icon, list, setData }) => {
         <>
             <div className="relative dropdown">
                 <button className={`text-white mr-0 text-xl ${(toggle) ? 'arrow-up' : 'arrow-down'}`} onClick={() => { setToggle(prev => !prev) }}><i className={icon}></i></button>
-                <div className={`absolute bg-[#061629] text-white right-0 rounded-lg h-56 w-64 z-10 overflow-y-scroll ${(toggle) ? 'dropdown-menu-active' : 'dropdown-menu-none'}`}>
+                <div className={`absolute bg-templateBlue text-white right-0 rounded-lg h-56 w-64 z-10 overflow-y-scroll ${(toggle) ? 'dropdown-menu-active' : 'dropdown-menu-none'}`}>
                     <ul className='p-3'>
                     {
                         list.map((e, i)=>{

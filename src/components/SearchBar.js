@@ -7,23 +7,27 @@ import { getMoviesByQuery } from '../api/movies'
 
 const SearchBar = ({ className }) => {
   const [tempTerm, setTempTerm] = useState('')
-  const [term, setTerm] = useState(false)
+  const [term, setTerm] = useState('')
   const flag = useRef(false)
   const navigate = useNavigate()
   const client = useQueryClient()
 
-  const { data: searchResults, isSuccess } = useQuery(['movies', 'search', term], () => getMoviesByQuery(term), {
-    enabled: flag.current,
-    placeholderData: {
-      results: [
-        { title: 'No results' }
-      ]
+  const { data: searchResults, isSuccess, isLoading } = useQuery(['movies', 'search', term], () => getMoviesByQuery(term), {
+    enabled: flag.current && term.length !== 0,
+    placeholderData: [
+      {
+        id: 1,
+        title: 'Loading..'
+      }
+    ],
+    onSuccess: (data) => {
+      console.log(data)
     }
   })
 
   useEffect(() => {
-    client.setQueryData(['movies', 'search', ''], { results: [{title: 'No result'}]})
-  }, [])
+    client.setQueryData(['movies', 'search', ''], [{ id: 0, title: 'No result' }])
+  }, [client])
 
   useEffect(() => {
     return () => {
@@ -50,16 +54,17 @@ const SearchBar = ({ className }) => {
   return (
     <>
       <div className={`w-80 h-80 ${className}`}>
-        <div className="search-bar float-right absolute top-0 glass">
-          <input type="text" name="term" id="term" placeholder='Search' onChange={onChange} className="search-bar-input" />
+        <div className="search-bar float-right absolute top-0">
+          <input type="text" name="term" id="term" placeholder='Search' onChange={onChange} className="search-bar-input" required autoComplete='off' />
           <button className='search-bar-button mx-auto'><i className="fa-solid fa-magnifying-glass text-white"></i></button>
         </div>
-        <div className="search-bar-content glass">
+        <div className="search-bar-content">
           {
-            (isSuccess) ? searchResults.results.map((movie) => {
-              return <p className="p-3 text-gray-300 hover:text-white" onMouseDown={() => navigate(`/home/movies/${movie.id}`)}>{movie.title}</p>
+            (isSuccess) ? searchResults.map((movie) => {
+              return <p className="p-3 text-gray-300 hover:text-white" key={movie.id} onMouseDown={() => navigate(`/home/movies/${movie.id}`)}>{movie.title}</p>
             })
-              : <p className="p-3">No results</p>
+              : (isLoading) ? <p className="p-3 text-gray-300">Loading..</p>
+                : <p className="p-3 text-gray-300">No results</p>
           }
         </div>
       </div>

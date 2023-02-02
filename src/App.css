@@ -89,7 +89,7 @@ input, select{
 }
 
 .review{
-    @apply text-white grid grid-cols-[min-content_1fr] grid-rows-[min-content_min-content] lg:p-5 my-5 mx-auto w-[90%] max-w-screen-xl
+    @apply text-white grid grid-cols-[min-content_1fr] grid-rows-[min-content_min-content] lg:p-5 p-3 my-5 mx-auto max-w-screen-xl
 }
 
 .review-icon{
@@ -101,7 +101,7 @@ input, select{
 }
 
 .search-bar{
-    @apply flex items-center focus-within:border-x-2 focus-within:border-t-2 focus-within:rounded-t-lg  w-10 justify-between transition-width duration-150 ease-in-out border-b-0 relative focus-within:w-80 
+    @apply flex items-center focus-within:border-x-2 focus-within:border-t-2 focus-within:rounded-t-lg  w-10 justify-between transition-width duration-150 ease-in-out border-b-0 relative focus-within:w-80 focus-within:bg-templateBlue bg-transparent
 }
 
 .search-bar-input{
@@ -117,7 +117,7 @@ input, select{
 }
 
 .search-bar:focus-within + .search-bar-content{
-    @apply opacity-100 transition-opacity delay-150 pointer-events-auto
+    @apply opacity-100 transition-opacity delay-150 pointer-events-auto bg-templateBlue
 }
 
 @screen sm{

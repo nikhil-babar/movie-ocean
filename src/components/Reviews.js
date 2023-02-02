@@ -1,25 +1,35 @@
-import { useFetch } from "../customHooks/useFetch";
+import { useInfiniteQuery } from "react-query";
+import { getReviews } from "../api/review";
 
 const Reviews = ({ movieId }) => {
-    const id = 505642;
-
-    const { isSuccess, data } = useFetch({
-        queryKey: ["reviews", id],
-        path: `/reviews/${id}`,
-        onSuccess: (data) => {
-            console.log(data.reviews);
+    const { isSuccess, data, hasNextPage, fetchNextPage, isFetchingNextPage, isError, isLoading} = useInfiniteQuery(['reviews', parseInt(movieId)], ({ pageParam = 1 }) => getReviews(movieId, pageParam, 5), {
+        getNextPageParam: (lastPage) => {
+            return (lastPage.next) ? lastPage.next : undefined
         },
-        onError: (error) => {
-            console.log(error);
+
+        select: (data) => {
+
+            let reviews = []
+
+            for (const page of data.pages) {
+                for (const e of page.reviews) {
+                    reviews.push(e)
+                }
+            }
+
+            return {reviews}
         },
     })
 
     if (isSuccess) {
+
         return (
-            <>
+            <section className="pb-10">
+                
                 {
+                    
                     data.reviews.map((review) => {
-                        return <div className="review">
+                        return <div className="review" key={review._id}>
                             <div className="flex justify-center items-center">
                                 <i className="review-icon fa-solid fa-user-astronaut"></i>
                             </div>
@@ -48,8 +58,30 @@ const Reviews = ({ movieId }) => {
                         </div>
                     })
                 }
-            </>
+
+                {
+                    isFetchingNextPage ? <p className="text-xl text-white text-center">Loading...</p> 
+                    :<button className="bg-green-500 text-lg text-white disabled:hidden" disabled={!hasNextPage} onClick={fetchNextPage}>Load More</button>
+                }
+
+            </section>
         );
+    }
+
+    if(isLoading){
+        return <>
+            <p className="text-white text-xl py-3 sm:py-5 text-center">
+                Loading..
+            </p>
+        </>
+    }
+
+    if(isError){
+        return <>
+            <p className="text-white text-xl py-3 sm:py-5 text-center">
+                No reviews available
+            </p>
+        </>
     }
 };
 
