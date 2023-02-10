@@ -1,55 +1,27 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import SearchBar from './SearchBar'
 import useAuth from '../customHooks/useAuth'
-import { useNavigate } from 'react-router-dom'
+import Sidebar from './Sidebar/Sidebar'
+import useSignOut from '../customHooks/useSignOut'
 
 const Navbar = () => {
-  const { signOut, auth } = useAuth()
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(null)
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (isError) {
-      switch (isError.code) {
-        case 'auth/wrong-password': {
-          alert('Please enter a valid password')
-          break
-        }
-
-        default: {
-          alert('Invalid user information')
-        }
-      }
-
-      setIsError(null)
-      setIsLoading(false)
-    }
-  }, [isError])
-
-
-  const handleSignOut = async () => {
-    try {
-      setIsLoading(true)
-      await signOut()
-      setIsLoading(false)
-      navigate('/')
-    } catch (err) {
-      console.log(err)
-      setIsError(err)
-    }
-  }
+  const { auth } = useAuth()
+  const { handleSignOut, isLoading } = useSignOut()
+  const [sidebar, setSidebar] = useState(false)
 
   return (
     <>
+      <Sidebar state={sidebar} onClick={() => setSidebar(prev => !prev)} />
       <div className="flex justify-between items-center h-fit pl-2 absolute top-0 left-0 w-full">
 
         <ul className="flex justify-start items-center list-none flex-nowrap">
-          <div className="my-2 pb-1 hover:bg-gray-400 block sm:hidden">
-            <button className='text-lg text-white' ><i className="fa-sharp fa-solid fa-bars"></i></button>
-          </div>
+          {
+            (!auth || !auth.emailVerified) ? null : <div className="my-2 pb-1 hover:bg-gray-400 block sm:hidden">
+              <button className='text-xl text-white'><i className="fa-sharp fa-solid fa-bars cursor-pointer" onClick={() => setSidebar(prev => !prev)}></i></button>
+            </div>
+          }
           <li className="p-1 mx-2 pb-2">
             <h2 className="navbar-brand z-20 my-2">
               MOVIE-OCEAN
@@ -58,7 +30,7 @@ const Navbar = () => {
 
           {
 
-            (!auth || !auth.emailVerified)? null
+            (!auth || !auth.emailVerified) ? null
               :
               [
                 {
@@ -81,10 +53,10 @@ const Navbar = () => {
         </ul>
 
         {
-          (auth === undefined) ? null : (!auth || !auth.emailVerified) ? <button type='button' className='bg-yellow-600 text-lg text-gray-300 mt-[15px] absolute top-0 right-3 h-fit p-1 px-2 rounded-sm hover:bg-yellow-700'><Link to = '/login' className="hover:no-underline text-gray-50 hover:text-white">login</Link></button>
+          (auth === undefined) ? null : (!auth || !auth.emailVerified) ? <button type='button' className='bg-yellow-600 text-lg text-gray-300 mt-[15px] absolute top-0 right-3 h-fit p-1 px-2 rounded-sm hover:bg-yellow-700'><Link to='/login' className="hover:no-underline text-gray-50 hover:text-white">login</Link></button>
             :
-            <div className="flex justify-end items-start absolute right-3 top-0">
-              <SearchBar className={'my-[10px] sm:my-4 mx-3'} />
+            <div className="flex justify-end items-start absolute  right-0 sm:right-3 top-0">
+              <SearchBar className={'my-[10px] sm:my-4 relative sm:bottom-0 bottom-1 right-3'} />
               <button type='button' className='bg-yellow-600 text-sm mt-[15px] text-white sm:block hidden rounded-none' onClick={handleSignOut} disabled={isLoading}>Logout</button>
             </div>
         }

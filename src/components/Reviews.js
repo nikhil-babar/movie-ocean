@@ -43,12 +43,6 @@ const Reviews = ({ movieId }) => {
                                         {new Date(review.updatedAt).toLocaleDateString()}
                                     </p>
                                 </div>
-                                <div className="sm:mr-2 mr-4">
-                                    <i className="fa-solid fa-thumbs-up text-green-600 text-xl mx-3"></i>
-                                    <p className="inline">{review.likes}</p>
-                                    <i className="fa-solid fa-thumbs-down text-red-600 text-xl mx-3"></i>
-                                    <p className="inline">{review.likes}</p>
-                                </div>
                             </div>
 
                             <div className="review-content">

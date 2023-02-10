@@ -9,6 +9,7 @@ const Input = ({ inputProps, onChange }) => {
                 {...inputProps}
                 onChange={onChange}
                 onBlur={() => {setRender(true)}}
+                required
             />
 
             <span className="text-red-600 text-sm"  leave = {render.toString()}>{inputProps.message}</span>

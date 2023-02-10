@@ -1,13 +1,11 @@
 import { useEffect } from "react"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import useAuth from "../customHooks/useAuth"
 import Input from "./Input"
 
 const Signup = () => {
 
-    const { signUp  } = useAuth()
-    const navigate = useNavigate()
+    const { signUp } = useAuth()
 
     const [formData, setFormData] = useState({
         name: '',
@@ -41,40 +39,40 @@ const Signup = () => {
             name: 'name',
             type: 'text',
             placeholder: 'Username',
-            required: true,
             pattern: '^[A-Za-z][A-Za-z0-9_]{3,29}$',
             message: 'Username should only contain alphanumeric characters and alteast one alphabet and atleast 4 characters',
-            value: formData.name
+            value: formData.name,
+            autoComplete: 'off'
         },
         {
             id: 2,
             name: 'email',
             type: 'email',
             placeholder: 'Email',
-            required: true,
             value: formData.email,
             pattern: '^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-            message: 'Email should consist of lowercase letters, one symbol, and digits'
+            message: 'Email should consist of lowercase letters, one symbol, and digits',
+            autoComplete: 'off'
         },
         {
             id: 3,
             name: 'password',
             type: 'password',
             placeholder: 'Password',
-            required: true,
             pattern: '(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}',
             message: 'Password should contain minimum 8 characters, at least one letter, one number and one special character',
             value: formData.password,
+            autoComplete: 'off'
         },
         {
             id: 4,
             name: 'confirmPassword',
             type: 'password',
             placeholder: 'Confirm password',
-            required: true,
             pattern: formData.password,
             value: formData.confirmPassword,
-            message: 'Input should match with password'
+            message: 'Input should match with password',
+            autoComplete: 'off'
         },
     ]
 
@@ -86,7 +84,7 @@ const Signup = () => {
         try {
             e.preventDefault()
             setIsLoading(true)
-            await signUp(formData.name,formData.email, formData.password)
+            await signUp(formData.name, formData.email, formData.password)
             setIsLoading(false)
             setIsSuccess(true)
         } catch (error) {

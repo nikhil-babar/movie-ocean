@@ -94,8 +94,8 @@ const AuthProvider = ({ children }) => {
         return (
             <>
                 <Navbar />
-                <div class="flex justify-center items-center h-screen">
-                    <i class="fa-solid fa-circle-notch animate-spin text-red-600 sm:text-5xl text-4xl"></i>
+                <div className="flex justify-center items-center h-screen">
+                    <i className="fa-solid fa-circle-notch animate-spin text-red-600 sm:text-5xl text-4xl"></i>
                 </div>
             </>
         )

@@ -8,7 +8,7 @@ const index = () => {
   return (
     <>
         <Navbar />
-        <div className="flex h-screen justify-center items-center gap-12" style={{
+        <div className="flex h-screen justify-center items-center gap-12 min-h-[800px]" style={{
           background: `url('${Backdrop}')`,
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',

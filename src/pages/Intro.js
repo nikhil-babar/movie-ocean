@@ -6,10 +6,10 @@ const Intro = () => {
 
     return (
         <>
-            <div className="sm:p-5 text-gray-50 text-center w-[800px]  flex flex-col justify-between h-80">
+            <div className="sm:p-5 text-gray-50 text-center w-[800px] flex flex-col justify-between h-80 relative bottom-24 sm:bottom-0">
                 <h1 className='lg:text-4xl font-bold md:text-3xl text-2xl'>Welcome to <span className='text-red-600'>MOVIE-OCEAN</span></h1>
                 <div>
-                    <p className='mt-5 sm:p-0 p-3'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet, iste doloribus omnis placeat quidem itaque molestias officia voluptas cumque laboriosam explicabo harum esse distinctio perferendis ipsa quis eius vel deleniti. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit eligendi molestias voluptatem, atque corrupti assumenda culpa porro unde reiciendis minus veritatis repellendus maiores possimus cum. Quod aut cupiditate dolorem veniam.</p>
+                    <p className='mt-5 sm:p-0 p-2'>Welcome to Movie-Ocean, your ultimate destination for all things movies! Our mission is to provide movie enthusiasts with the latest information on the biggest blockbusters, indie gems, and everything in between. We believe that movies have the power to entertain, inspire, and bring people together, and we strive to create a community where everyone can share their love for the big screen. Whether you're looking for reviews, recommendations, or just want to stay up-to-date on the latest film news, you've come to the right place. So sit back, relax, and let the magic of movies wash over you!</p>
                     <button className='bg-red-600 text-white text-2xl mt-5 hover:bg-red-700'><Link to = '/signup' className="hover:no-underline text-gray-50 hover:text-white">Get started</Link></button>
                 </div>
             </div>

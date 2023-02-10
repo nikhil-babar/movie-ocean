@@ -35,7 +35,6 @@ const MovieDetail = () => {
                         {title}
                     </h2>
                     <Time minutes={runtime} />
-                    <button className="bg-yellow-500 m-3">Add to playlist</button>
                     <p className="p-3 mt-3 mb-1">{overview}</p>
                     <div className="px-3">
                         {[
