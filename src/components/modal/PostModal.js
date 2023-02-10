@@ -5,18 +5,20 @@ import { useMutation } from 'react-query'
 import useMovie from '../../customHooks/useMovie'
 import { addReview } from '../../api/review'
 import { useQueryClient } from 'react-query'
+import useAuth from '../../customHooks/useAuth'
 
 const Temp = () => {
     const [modal, setModal] = useState(false)
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
+    const { auth } = useAuth()
     const {
         id
     } = useMovie()
     const client = useQueryClient()
 
 
-    const { mutateAsync, isLoading } = useMutation(addReview, {
+    const { mutateAsync, isLoading, isError } = useMutation(addReview, {
         onSuccess: async () => {
             client.invalidateQueries(['reviews', parseInt(id)])
         },
@@ -32,7 +34,9 @@ const Temp = () => {
         await mutateAsync({
             movieId: id,
             title,
-            content
+            content,
+            author: auth.displayName ? auth.displayName : "Anonymous",
+            uid: auth.uid
         })
 
         setModal(false)
@@ -53,6 +57,9 @@ const Temp = () => {
                         <button type='submit' className='bg-yellow-600 text-white my-2 disabled:hidden' disabled={isLoading}>Post Review</button>
                         {
                             isLoading ? <p className='text-center my-2'>Posting your review</p> : null
+                        }
+                        {
+                            isError ? <p className='text-red-600 my-2 text-center'>Failed, please try again</p> : null
                         }
                     </form>
                 </Modal>

@@ -9,20 +9,26 @@ import { QueryClient, QueryClientProvider, } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { BrowserRouter } from 'react-router-dom';
 import AuthContext from './context/AuthContext';
+import ScrollTop from './components/ScrollTop';
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
+
+if(process.env.NODE_ENV === 'production') disableReactDevTools()
 
 const queryClient = new QueryClient()
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AuthContext>
-      <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <App />
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </BrowserRouter>
-    </AuthContext>
+    <BrowserRouter>
+      <AuthContext>
+        <ScrollTop>
+          <QueryClientProvider client={queryClient}>
+            <App />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </ScrollTop>
+      </AuthContext>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import CrewDetails from "../components/CrewDetails";
 import MovieDetail from "../components/MovieDetail";

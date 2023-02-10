@@ -1,5 +1,6 @@
 import React from 'react'
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import MovieCard from './cards/MovieCard';
 import PersonCard from './cards/PersonCard'
@@ -17,9 +18,15 @@ function Arrow(props) {
     );
 }
 
-const SlidingWindow = ({ value, title, className, type, clickFunc }) => {
+const SlidingWindow = ({ value, title, className, type,  }) => {
 
     const slider = useRef(null)
+
+    const navigate = useNavigate()
+
+    if(value?.length === 0){
+        return <div></div>
+    }
 
     const settings = () => {
         switch (type) {
@@ -174,7 +181,7 @@ const SlidingWindow = ({ value, title, className, type, clickFunc }) => {
             <div className={`${className}`}>
                 <div className="flex justify-between items-center  lg:pr-[3%] md:pr-[7%] sm:pr-[5%] xs:pr-5 pr-[8%]">
                     <p className = {`text-white text-lg md:text-xl w-full sm:w-1/3 lg:pl-[3%] md:pl-[7%] sm:pl-[5%] xs:pl-5 pl-[8%] my-3 ${(type === 2) ? 'md:ml-5' : ''}`}>{title}</p>
-                    <div className={`w-fit flex sm:block ${(type == 3) ? 'block' : 'hidden'}`}>
+                    <div className={`w-fit flex sm:block ${(type === 3) ? 'block' : 'hidden'}`}>
                         <i className="fa-solid fa-arrow-left-long text-gray-600 md:text-2xl text-xl hover:text-white mr-2" onClick={() => slider?.current?.slickPrev()}></i>
                         <i className="fa-solid fa-arrow-right-long text-gray-600 md:text-2xl text-xl hover:text-white ml-2" onClick={() => slider?.current?.slickNext()}></i>
                     </div>
@@ -182,7 +189,7 @@ const SlidingWindow = ({ value, title, className, type, clickFunc }) => {
                 <Slider {...settings()} ref={slider} className="justify-center lg:mt-10 md:mt-7 sm:mt-5 mt-3">
                     {
                         {
-                            1: value.map(movie => <MovieCard key={movie.id} value={movie} onCardClick={clickFunc} />),
+                            1: value.map(movie => <MovieCard key={movie.id} value={movie} onCardClick={(id) => navigate(`/movies/${id}`)} />),
                             2: value.map(person => <PersonCard key={person.id} value={person} />),
                             3: value.filter(video => video.site !== 'Youtube').map(video => <YoutubePlayer key={video.id} value={video} />)
                         }[type]

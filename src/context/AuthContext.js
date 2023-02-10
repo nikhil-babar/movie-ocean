@@ -1,13 +1,31 @@
-import { createContext , useState} from "react"
-import { axiosPrivateClient, axiosClient } from "../api/axiosClient"
+import { createContext, useState } from "react"
 import { useEffect } from "react"
+import Auth from "../api/firebase"
+import {
+    createUserWithEmailAndPassword,
+    onAuthStateChanged,
+    sendEmailVerification,
+    signInWithEmailAndPassword,
+    signOut as signOutFirebase,
+    updateProfile,
+    signInWithPopup,
+    GoogleAuthProvider
+} from "firebase/auth"
+import { axiosPrivateClient } from "../api/axiosClient"
+import Navbar from "../components/Navbar"
 
-export const authContext = createContext({})
+export const AuthContext = createContext({})
 
-const AuthContext = ({children}) => {
-    const [auth, setAuth] = useState({})
+const AuthProvider = ({ children }) => {
+    const [auth, setAuth] = useState(undefined)
 
     useEffect(() => {
+        const unsubscribeAuth = onAuthStateChanged(Auth, async (user) => {
+            console.log(user)
+
+            setAuth(prev => user)
+        })
+
         const requestInterceptor = axiosPrivateClient.interceptors.request.use(
             async config => {
                 config.headers['Authorization'] = `Bearer ${auth.accessToken}`
@@ -24,19 +42,15 @@ const AuthContext = ({children}) => {
 
             async error => {
                 try {
-                    if(error.response?.status === 401){
-                        const request = error.config
-
-                        const newAccessToken = await axiosClient('/user/getAccessToken')
-
-                        setAuth(prev => {
-                            return { ...prev, accessToken: newAccessToken.data.accessToken }
-                        })
-
-                        return axiosPrivateClient(request)
+                    if (error.response?.status === 403) {
+                        setAuth(null)
                     }
 
-                    return Promise.reject('')
+                    if (error.response?.status === 500) {
+                        console.log('server side error')
+                    }
+
+                    throw error
 
                 } catch (error) {
                     return Promise.reject(error)
@@ -45,17 +59,53 @@ const AuthContext = ({children}) => {
         )
 
         return () => {
+            unsubscribeAuth()
             axiosPrivateClient.interceptors.request.eject(requestInterceptor)
             axiosPrivateClient.interceptors.response.eject(responseInterceptor)
         }
+
     }, [auth, setAuth])
 
+    const signUp = async (userName, email, password) => {
+        await createUserWithEmailAndPassword(Auth, email, password)
+
+        await updateProfile(Auth.currentUser, {
+            displayName: userName
+        })
+
+        await sendEmailVerification(Auth.currentUser, {
+            url: 'http://localhost:3000'
+        })
+    }
+
+    const signIn = (email, password) => {
+        return signInWithEmailAndPassword(Auth, email, password)
+    }
+
+    const signOut = () => {
+        return signOutFirebase(Auth)
+    }
+
+    const googleSignIn = () => {
+        return signInWithPopup(Auth, new GoogleAuthProvider())
+    }
+
+    if (auth === undefined) {
+        return (
+            <>
+                <Navbar />
+                <div class="flex justify-center items-center h-screen">
+                    <i class="fa-solid fa-circle-notch animate-spin text-red-600 sm:text-5xl text-4xl"></i>
+                </div>
+            </>
+        )
+    }
 
     return (
-        <authContext.Provider value={{auth, setAuth}}>
+        <AuthContext.Provider value={{ auth, signUp, signIn, signOut, googleSignIn }}>
             {children}
-        </authContext.Provider>
+        </AuthContext.Provider>
     )
 }
 
-export default AuthContext
+export default AuthProvider

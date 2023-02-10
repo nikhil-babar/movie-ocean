@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiPath = 'http://192.168.43.41:5000'
+const apiPath = 'https://movie-ocean-api.onrender.com'
 
 export const axiosClient = axios.create({
     baseURL: apiPath,

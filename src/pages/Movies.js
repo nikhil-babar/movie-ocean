@@ -87,7 +87,7 @@ const GENRE_DROPDOWN = [
 const Movies = () => {
     const [genre, setGenre] = useState(28)
 
-    const { isSuccess, data: movies, fetchNextPage } = useInfiniteQuery(['movies', genre], ({ pageParam = 1 }) => getMoviesByGenre(genre, pageParam), {
+    const { isSuccess, data: movies, fetchNextPage, isLoading } = useInfiniteQuery(['movies', genre], ({ pageParam = 1 }) => getMoviesByGenre(genre, pageParam), {
 
         keepPreviousData: true,
         getNextPageParam: (lastPage) => {
@@ -106,6 +106,15 @@ const Movies = () => {
 
         return temp
     }
+
+    if (isLoading) {
+        return (
+            <div class="flex justify-center items-center h-screen">
+                <i class="fa-solid fa-circle-notch animate-spin text-red-600 sm:text-5xl text-4xl"></i>
+            </div>
+        )
+    }
+
 
     if (isSuccess) {
         const getTitle = () => {

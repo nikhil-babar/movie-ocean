@@ -1,10 +1,9 @@
-import React from 'react'
-import '../styles/player.css'
 
 const YoutubePlayer = ({ value }) => {
+
     return (
         <>
-            <iframe src={`https://www.youtube.com/embed/${value.key}`} title="videos" className='player' allowFullScreen></iframe>
+            <iframe src={`https://www.youtube.com/embed/${value.key}`} title="videos" className='player z-0 hover:scale-105 transition-transform duration-[50] aspect-video md:w-[350px] mx-auto w-[320px]' allowFullScreen loading='eager' />
         </>
     )
 }

@@ -61,7 +61,7 @@ const SearchBar = ({ className }) => {
         <div className="search-bar-content">
           {
             (isSuccess) ? searchResults.map((movie) => {
-              return <p className="p-3 text-gray-300 hover:text-white" key={movie.id} onMouseDown={() => navigate(`/home/movies/${movie.id}`)}>{movie.title}</p>
+              return <p className="p-3 text-gray-300 hover:text-white" key={movie.id} onMouseDown={() => navigate(`/movies/${movie.id}`)}>{movie.title}</p>
             })
               : (isLoading) ? <p className="p-3 text-gray-300">Loading..</p>
                 : <p className="p-3 text-gray-300">No results</p>

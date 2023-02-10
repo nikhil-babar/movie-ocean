@@ -37,7 +37,7 @@ const Reviews = ({ movieId }) => {
                             <div className="flex justify-between items-center">
                                 <div className="ml-1">
                                     <div>
-                                        <p className="text-md font-bold text-yellow-500">{review.user.name}</p>
+                                        <p className="text-md font-bold text-yellow-500">{review.author}</p>
                                     </div>
                                     <p className=" text-xs text-gray-400">
                                         {new Date(review.updatedAt).toLocaleDateString()}
@@ -67,15 +67,13 @@ const Reviews = ({ movieId }) => {
             </section>
         );
     }
-
-    if(isLoading){
-        return <>
-            <p className="text-white text-xl py-3 sm:py-5 text-center">
-                Loading..
-            </p>
-        </>
+    if (isLoading) {
+        return (
+            <div class="flex justify-center items-center h-fit">
+                <i class="fa-solid fa-circle-notch animate-spin text-red-600 sm:text-4xl text-3xl my-5"></i>
+            </div>
+        )
     }
-
     if(isError){
         return <>
             <p className="text-white text-xl py-3 sm:py-5 text-center">
