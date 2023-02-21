@@ -1,4 +1,5 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import Cinemalogo from "../assets/cinema-logo.png"
 

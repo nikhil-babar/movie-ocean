@@ -74,7 +74,7 @@ const AuthProvider = ({ children }) => {
         })
 
         await sendEmailVerification(Auth.currentUser, {
-            url: 'http://localhost:3000'
+            url: 'https://movie-ocean.onrender.com'
         })
     }
 
