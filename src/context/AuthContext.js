@@ -12,7 +12,7 @@ import {
     GoogleAuthProvider
 } from "firebase/auth"
 import { axiosPrivateClient } from "../api/axiosClient"
-import Navbar from "../components/Navbar"
+import Fallback from "../components/Fallback"
 
 export const AuthContext = createContext({})
 
@@ -92,12 +92,7 @@ const AuthProvider = ({ children }) => {
 
     if (auth === undefined) {
         return (
-            <>
-                <Navbar />
-                <div className="flex justify-center items-center h-screen">
-                    <i className="fa-solid fa-circle-notch animate-spin text-red-600 sm:text-5xl text-4xl"></i>
-                </div>
-            </>
+            <Fallback/>
         )
     }
 

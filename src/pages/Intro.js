@@ -1,9 +1,13 @@
-import axios from 'axios';
-import React, { useEffect } from 'react'
+import { axiosClient as axios } from '../api/axiosClient';
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import Cinemalogo from "../assets/cinema-logo.png"
 
 const Intro = () => {
+
+    useEffect(() => {
+        axios.get('/')
+    }, [])
 
     return (
         <>
