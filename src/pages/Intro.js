@@ -6,7 +6,7 @@ import Cinemalogo from "../assets/cinema-logo.png"
 const Intro = () => {
 
     useEffect(() => {
-        axios.get('/')
+        axios.get('/').catch(() => {})
     }, [])
 
     return (

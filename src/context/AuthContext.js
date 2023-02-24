@@ -23,12 +23,12 @@ const AuthProvider = ({ children }) => {
         const unsubscribeAuth = onAuthStateChanged(Auth, async (user) => {
             console.log(user)
 
-            setAuth(prev => user)
+            setAuth(user)
         })
 
         const requestInterceptor = axiosPrivateClient.interceptors.request.use(
             async config => {
-                config.headers['Authorization'] = `Bearer ${auth.accessToken}`
+                config.headers['Authorization'] = `Bearer ${auth?.accessToken}`
                 return config
             },
 

@@ -7,7 +7,7 @@ import PrivateRoute from "./components/PrivateRoute"
 import Fallback from "./components/Fallback"
 
 const Intro = lazy(() => import("./pages/Intro"))
-const Login = lazy(() => import("./pages/Home"))
+const Login = lazy(() => import("./components/Login"))
 const Signup = lazy(() => import("./components/Login"))
 const MovieDescription = lazy(() => import("./pages/MovieDescription"))
 const Movies = lazy(() => import("./pages/Movies"))
